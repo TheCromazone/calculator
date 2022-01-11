@@ -1,0 +1,126 @@
+<!--make a compound interest calculator (3 texts fields to input number: principle, interest rate, amount of time), one output field, calculate. 
+2nd part is to find the interest rate when you have the principle, amount of time and final value 
+3rd part (optional): figure out how to get rid of the calculate button -->
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>My Compound interest calculator</title>
+   <!-- <style>
+        body {
+        background-image: url('https://i0.wp.com/calmatters.org/wp-content/uploads/2021/08/math-curriculum.jpg?fit=1200%2C900&ssl=1');
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: center;
+      } 
+    </style> -->
+  </head>
+  <body>
+      <h1 style="color: black; font-size: xx-large;"><strong> Compound Interest Calcualtor</strong></h1>
+    <p style="color: black; font-size: large;"> What is the compound interest formula?: <em> A=P(1+r/n)<sup>(nt)</sup></em> where: </p>
+    <ul style="font-size: large; color: black;">
+        <li> A is the total amount calculated</li>
+        <li> P is the principle </li>
+        <li> r is the interest rate</li>
+        <li> n is the number of times interest is applied per unit time </li>
+        <li> t is the number of time periods elapsed</li>
+    </ul>
+    <img src="https://www.thecalculatorsite.com/images/compound-interest-formula-diagram.png" width="300" height="200">
+    <p style="color: crimson; font-size: x-large;"> <strong> Warning!:</strong> The compound interest calculator below will only find the total amount A when all other four elements are inputed.  The other compound interest calculator below will find the interest rate r when all other elements are inputed.</p>
+    <h2 style="font-size: large; color: black;"> <strong> Compound interest rate calculator for A</strong></h2>
+    <form style="color: black; font-size: large;">
+        <label for="principle">P (principle):</label><br>
+        <input type="text" id="principle" name="principle"><br>
+        <label for="interest_rate">r %(interest rate as a percentage):</label><br>
+        <input type="text" id="interest_rate" name="interest_rate"><br>
+        <label for="nth"> n (number of times interest is applied per unit time):</label><br>
+        <input type="text" id="nth" name="nth"><br>
+        <label for="t">t (number of time periods elapsed):</label><br>
+        <input type="text" id="t" name="t">     
+      </form>
+      <button id="calculate">
+        <strong> Calculate</strong>
+    </button>
+    <p id="result" style="color: black; font-size: x-large;"> <strong>result: </strong></p>
+    <h3 style="font-size: x-large; color: black;"> <strong> General compound interest rate calculator </strong></h3>
+    <p style="color: black; font-size: large;"> Here you can find any of the variables <strong><em>(except n since I'm not smart enough to do the math <img src="https://www.cambridge.org/elt/blog/wp-content/uploads/2019/07/Sad-Face-Emoji.png" width="20" height="20">) </em></strong> using other 3 inputed variables</p>
+    <p style="color: crimson; font-size: x-large;"> <strong> Warnings!:</strong> <ul style="color: crimson; font-size: large;"> 
+      <li>The compound interest calculator below will only find a certain varible when that desired variables text box is empty and other 3 variables have inputed numbers in them.</li>
+      <li>In order to do multiple calculations, text box of desiered variable must be emptied before pressing the calculate button!</li>
+      <li>n cannot be calculated from other 3 variables as it's mainly irrelevant compared to the other variables.</li>
+      <li>High values of the time period r often inaccurate as the formula involved uses natural logarithms and parsed Ints which makes it inaccurate compared to the other 3 variables</li>
+      </ul>
+    </p>
+    <form style="color: black; font-size: x-large;">
+        <label for="principle1">P (principle):</label><br>
+        <input type="text" id="principle1" name="principle1"><br>
+        <label for="A">A (total amount after compounded interest):</label><br>
+        <input type="text" id="A" name="A"><br>
+        <label for="nth1"> n (number of times interest is applied per unit time):</label><br>
+        <input type="text" id="nth1" name="nth1"><br>
+        <label for="time">t (number of time periods elapsed):</label><br>
+        <input type="text" id="time" name="time"><br>
+        <label for="rate">interest rate (r) as percentage %: </label><br>
+        <input type="text" id="rate" name="rate">     
+      </form>
+      <button id="calculate1">
+        <strong> Calculate</strong>
+    </button>
+    <script>
+        var input_element=document.getElementById("calculate");
+        input_element.onclick=function(){
+            var P=document.getElementById("principle").value;
+            var r=document.getElementById("interest_rate").value;
+            var n=document.getElementById("nth").value;
+            var t=document.getElementById("t").value;
+            var result = document.getElementById("result");
+            A=(P * Math.pow((1 + (r / (n * 100))), (n * t))); 
+            result.innerHTML="The total amount (A) is " + A.toFixed(2);
+        }
+        var button_element=document.getElementById("calculate1");
+        button_element.onclick=function(){
+          if (document.getElementById("rate").value == ""){
+            var P1=document.getElementById("principle1").value;
+            var A1=document.getElementById("A").value;
+            var n1=document.getElementById("nth1").value;
+            var t1=document.getElementById("time").value;
+            var result1 = document.getElementById("rate");
+            r1=((n1 * (Math.pow((A1 / P1), (1 / (n1 * t1)))) - 1)); 
+            r2= (r1-parseInt(r1))*100;
+            result1.value= r2.toFixed(2);
+        }
+          else if (document.getElementById("A").value == ""){
+            var P1=document.getElementById("principle1").value;
+            var r1=document.getElementById("rate").value;
+            var n1=document.getElementById("nth1").value;
+            var t1=document.getElementById("time").value;
+            var result2=document.getElementById("A");
+            A1=(P1 * Math.pow((1 + (r1 / (n1 * 100))), (n1 * t1))); 
+            result2.value=A1.toFixed(2);
+        }
+          else if (document.getElementById("principle1").value == ""){
+            var A1=document.getElementById("A").value;
+            var r1=document.getElementById("rate").value;
+            var n1=document.getElementById("nth1").value;
+            var t1=document.getElementById("time").value;
+            var result2=document.getElementById("principle1");
+            P1=(A1 / (Math.pow((1 + (r1 / (n1 * 100))), (n1 * t1)))); 
+            result2.value=P1.toFixed(2);
+        }
+          else if (document.getElementById("time").value == ""){
+            var A1=document.getElementById("A").value;
+            var r1=document.getElementById("rate").value;
+            var P1=document.getElementById("principle1").value;
+            var n2=document.getElementById("nth1").value;
+            var result3=document.getElementById("time");
+            t2=parseInt((Math.log(A1/P1)) / (n2 * (Math.log(1+(r1/n2))))*100); 
+            result3.value=t2.toFixed(2);
+          }
+        } 
+
+
+            
+       
+    </script>
+  </body>
+</html>
